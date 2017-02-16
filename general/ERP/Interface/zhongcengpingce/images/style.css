@@ -1,0 +1,96 @@
+A:link {
+	COLOR: #0000ff; TEXT-DECORATION: none
+}
+A:visited {
+	COLOR: Green; TEXT-DECORATION: none
+}
+A:active {
+	COLOR: #3333ff; TEXT-DECORATION: none
+}
+A:hover {
+	COLOR: #ff0000; TEXT-DECORATION: none
+}
+BODY {
+	SCROLLBAR-FACE-COLOR: rgb(158,180,214); FONT-SIZE: 12pt; SCROLLBAR-3DLIGHT-COLOR: rgb(158,180,214); SCROLLBAR-ARROW-COLOR: #ffffff; FONT-FAMILY: "Verdana", "Arial", "卜悶"
+}
+.bodycolor { 
+	BACKGROUND: #264989; background-image: url("/Framework/images/bg.gif")
+}
+.small {
+	FONT-SIZE: 9pt
+}
+.big {
+	FONT-SIZE: 12pt
+}
+.big1 {
+	FONT-SIZE: 12pt; COLOR: #ffffff
+}
+.big2 {
+	FONT-SIZE: 18pt
+}
+.verybig {
+	FONT-SIZE: 24pt
+}
+INPUT.SmallButton {
+	BORDER-RIGHT: #104a7b 1px solid; BORDER-TOP: #afc4d5 1px solid; FONT-SIZE: 9pt; BACKGROUND: #d6e7ef; BORDER-LEFT: #afc4d5 1px solid; CURSOR: hand; COLOR: #000066; BORDER-BOTTOM: #104a7b 1px solid; HEIGHT: 19px; TEXT-DECORATION: none
+}
+INPUT.BigButton {
+	BORDER-RIGHT: #104a7b 1px solid; BORDER-TOP: #afc4d5 1px solid; FONT-SIZE: 12pt; BACKGROUND: #d6e7ef; BORDER-LEFT: #afc4d5 1px solid; CURSOR: hand; COLOR: #000066; BORDER-BOTTOM: #104a7b 1px solid; HEIGHT: 24px; TEXT-DECORATION: none
+}
+INPUT.SmallInput {
+	BORDER-RIGHT: black 1px solid; BORDER-TOP: black 1px solid; BACKGROUND: #d6e7ef; FONT: 9pt ??━?,MS SONG,SimSun,tahoma,sans-serif; BORDER-LEFT: black 1px solid; COLOR: #000066; BORDER-BOTTOM: black 1px solid; HEIGHT: 18px
+}
+INPUT.SmallInput1 {
+	BORDER-RIGHT: 0px; BORDER-TOP: black 1px solid; BACKGROUND: #d6e7ef; FONT: 9pt ??━?,MS SONG,SimSun,tahoma,sans-serif; BORDER-LEFT: black 1px solid; COLOR: #000066; BORDER-BOTTOM: black 1px solid; HEIGHT: 18px
+}
+INPUT.BigInput {
+	BORDER-RIGHT: black 1px solid; BORDER-TOP: black 1px solid; BACKGROUND: #d6e7ef; FONT: 12pt ??━?,MS SONG,SimSun,tahoma,sans-serif; BORDER-LEFT: black 1px solid; COLOR: #000066; BORDER-BOTTOM: 1px double; HEIGHT: 22px
+}
+INPUT.BigInputMoney {
+	BORDER-RIGHT: black 1px solid; BORDER-TOP: black 1px solid; BACKGROUND: #d6e7ef; FONT: 12pt ??━?,MS SONG,SimSun,tahoma,sans-serif; BORDER-LEFT: black 1px solid; COLOR: #000066; BORDER-BOTTOM: 1px double; HEIGHT: 22px; TEXT-ALIGN: right
+}
+INPUT.SmallStatic {
+	BORDER-RIGHT: black 1px solid; BORDER-TOP: black 1px solid; BACKGROUND: #e0e0e0; FONT: 9pt ??━?,MS SONG,SimSun,tahoma,sans-serif; BORDER-LEFT: black 1px solid; COLOR: #000066; BORDER-BOTTOM: black 1px solid; HEIGHT: 18px
+}
+INPUT.BigStatic {
+	BORDER-RIGHT: black 1px solid; BORDER-TOP: black 1px solid; BACKGROUND: #e0e0e0; FONT: 12pt ??━?,MS SONG,SimSun,tahoma,sans-serif; BORDER-LEFT: black 1px solid; COLOR: #000066; BORDER-BOTTOM: 1px double; HEIGHT: 22px
+}
+SELECT.BigSelect {
+	BORDER-RIGHT: black 1px solid; BORDER-TOP: black 1px solid; BACKGROUND: #d6e7ef; FONT: 12pt ??━?,MS SONG,SimSun,tahoma,sans-serif; BORDER-LEFT: black 1px solid; COLOR: #000066; BORDER-BOTTOM: 1px double; HEIGHT: 22px
+}
+SELECT.SmallSelect {
+	BORDER-RIGHT: black 1px solid; BORDER-TOP: black 1px solid; BACKGROUND: #d6e7ef; FONT: 9pt ??━?,MS SONG,SimSun,tahoma,sans-serif; BORDER-LEFT: black 1px solid; COLOR: #000066; BORDER-BOTTOM: 1px double; HEIGHT: 18px
+}
+SELECT.BigStatic {
+	BORDER-RIGHT: black 1px solid; BORDER-TOP: black 1px solid; BACKGROUND: #e0e0e0; FONT: 12pt ??━?,MS SONG,SimSun,tahoma,sans-serif; BORDER-LEFT: black 1px solid; COLOR: #000066; BORDER-BOTTOM: 1px double; HEIGHT: 22px
+}
+SELECT.SmallStatic {
+	BORDER-RIGHT: black 1px solid; BORDER-TOP: black 1px solid; BACKGROUND: #e0e0e0; FONT: 9pt ??━?,MS SONG,SimSun,tahoma,sans-serif; BORDER-LEFT: black 1px solid; COLOR: #000066; BORDER-BOTTOM: black 1px solid; HEIGHT: 18px
+}
+TEXTAREA.BigInput {
+	BORDER-RIGHT: black 1px solid; BORDER-TOP: black 1px solid; BACKGROUND: #d6e7ef; FONT: 10pt ??━?,MS SONG,SimSun,tahoma,sans-serif; BORDER-LEFT: black 1px solid; COLOR: #000066; BORDER-BOTTOM: 1px double
+}
+TEXTAREA.BigStatic {
+	BORDER-RIGHT: black 1px solid; BORDER-TOP: black 1px solid; BACKGROUND: #e0e0e0; FONT: 10pt ??━?,MS SONG,SimSun,tahoma,sans-serif; BORDER-LEFT: black 1px solid; COLOR: #000066; BORDER-BOTTOM: 1px double
+}
+.TableControl {
+	BACKGROUND: #eff7ff
+}
+.TableHeader {
+	BACKGROUND: #d3e5fa
+}
+.TableHeader1 { 
+	BACKGROUND: #D3E5FA; background-image: url("/images/button_back.gif");  	CURSOR: hand; COLOR: #000066;
+}
+.TableContent {
+	BACKGROUND: #e2e8fa
+}
+.TableData {
+	BACKGROUND: #ffffff
+}
+.TableLine1 {
+	BACKGROUND: #f3f3f3
+}
+.TableLine2 {
+	BACKGROUND: #ffffff
+}

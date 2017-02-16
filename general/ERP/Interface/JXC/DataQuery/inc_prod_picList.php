@@ -1,0 +1,332 @@
+<?php
+ini_set('display_errors',1);
+ini_set('error_reporting',E_ALL);
+error_reporting(E_WARNING | E_ERROR);
+require_once("lib.inc.php");
+$GLOBAL_SESSION=returnsession();
+$prodtype=$_GET['prodtype'];
+$orderby=$_GET['orderby'];
+$showhaspic=$_GET['showhaspic'];
+$showhaskucun=$_GET['showhaskucun'];
+$curpage=$_GET['curpage'];
+if($curpage=='')
+	$curpage=1;
+$pagesize=20;
+if($orderby=='')
+	$orderby='xiaoliang';
+$rowid= $_GET["rowid"];		//主表ID
+$tablename=$_GET["tablename"];//表名
+	//取得仓库
+    $storeid="";
+
+    if($tablename=="stockchangemain_detail")
+    	$storeid= returntablefield("stockchangemain", "billid", $_GET['rowid'], "outstoreid");
+    else if($tablename=="storecheck_detail")
+    	$storeid= returntablefield("storecheck", "billid", $_GET['rowid'], "storeid");
+    else if($tablename=="productzuzhuang_detail")
+    	$storeid= returntablefield("productzuzhuang", "billid", $_GET['rowid'], "outstoreid");
+    else if($tablename=="productzuzhuang2_detail")
+    	$storeid= returntablefield("productzuzhuang", "billid", $_GET['rowid'], "instoreid");
+    else if($tablename=="v_sellonedetail")
+    	$storeid= returntablefield("sellplanmain", "billid", $_GET['rowid'], "storeid");
+    if($storeid!='')
+    	$storename=returntablefield("stock", "ROWID", $storeid, "name");
+    $FormPageAction = FormPageAction();
+?>
+<html> 
+<head>
+<style type="text/css">
+
+
+body{background:#E0E0E0;font-size:10pt;margin:5px;}
+div.product{font-size:10pt;margin:5px;padding:5px;}
+table{border-collapse:collapse;align:center;width:100%;border:0px;}
+span.price{float:right;text-align:right}
+
+div.pagination {
+	padding: 3px;
+	margin: 3px;
+	text-align:center;
+}
+
+div.pagination a {
+	padding: 5px 8px 5px 8px;
+	margin: 5px;
+	border: 1px solid #AAAADD;
+	
+	text-decoration: none; /* no underline */
+	color: #000099;
+}
+div.pagination a:hover, div.pagination a:active {
+	border: 1px solid #000099;
+
+	color: #000;
+}
+div.pagination span.current {
+	padding: 5px 8px 5px 8px;
+	margin: 5px;
+		border: 1px solid #000099;
+		
+		font-weight: bold;
+		background-color: #000099;
+		color: #FFF;
+	}
+	div.pagination span.disabled {
+		padding: 5px 8px 5px 8px;
+		margin: 5px;
+		border: 1px solid #EEE;
+	
+		color: #DDD;
+	}
+	
+	
+</style>
+<script type="text/javascript" language="javascript" src="<?php echo ROOT_DIR?>general/ERP/Enginee/jquery/jquery.js"></script>
+<script type="text/javascript" language="javascript" src="<?php echo ROOT_DIR?>general/ERP/Enginee/jquery/jquery.magnifier.js"></script>
+
+<script type="text/javascript">
+function GetRadioValue(RadioName)
+{
+    var obj;    
+    obj=document.getElementsByName(RadioName);
+    if(obj!=null){
+        var i;
+        for(i=0;i<obj.length;i++){
+            if(obj[i].checked){
+                return obj[i].value;            
+            }
+        }
+    }
+}
+function orderRefresh()
+{
+	var orderby=GetRadioValue('orderby');
+	var haspic=document.getElementById('showhaspic');
+	if(haspic.checked) 
+		haspic=1;
+	else
+		haspic=0;
+	var haskucun=document.getElementById('showhaskucun');
+	if(haskucun.checked)
+		haskucun=1;
+	else
+		haskucun=0;
+	location.href="?<?php echo $FormPageAction?>&orderby="+orderby+"&showhaspic="+haspic+"&showhaskucun="+haskucun;
+}
+function addproduct(pid)
+{
+	var opertype=parent.parent.window.frames['left'].GetRadioValue('opertype');
+	if(opertype==null)
+		opertype=1;
+	var params="&action=add&productId="+pid+"&im=3&addnum=1&opertype="+opertype;
+	parent.sendRequest(params);
+}
+</script>
+
+</head>
+<body  topMargin=5 >
+<div>
+<fieldset style="
+		float: left;
+		padding-left:5px;
+		padding-right:5px;
+		padding-top:5px;
+		padding-bottom:5px;">
+			 <legend class="small" align=left>
+			  <b>排序</b>
+		  </legend>
+<label><input type="radio" name='orderby' value='xiaoliang' <?php if($orderby=='xiaoliang') echo 'checked'?> onclick='orderRefresh()'>按销量(最近三个月)</label>
+<label><input type="radio" name='orderby' value='price' <?php if($orderby=='price') echo 'checked'?> onclick='orderRefresh()'>按价格</label>
+<label><input type="radio" name='orderby' value='rectime' <?php if($orderby=='rectime') echo 'checked'?> onclick='orderRefresh()'>按到货时间</label>
+<label><input type="radio" name='orderby' value='kucun' <?php if($orderby=='kucun') echo 'checked'?> onclick='orderRefresh()'>按库存</label>
+</fieldset>
+<fieldset style="
+		float: left;
+		padding-left:5px;
+		padding-right:5px;
+		padding-top:5px;
+		padding-bottom:5px;">
+			 <legend class="small" align=left>
+			  <b>筛选</b>
+		  </legend>
+<label><input type="checkbox" id="showhaspic" name='showhaspic' value='1' <?php if($showhaspic=='1') echo 'checked'?> onclick='orderRefresh()'>只显示有图片的</label>
+<label><input type="checkbox" id="showhaskucun" name='showhaskucun' value='1' <?php if($showhaskucun=='1') echo 'checked'?> onclick='orderRefresh()'>只显示有库存的</label>
+</fieldset><span style="vertical-align:middle;">
+<?php if($storename!='') echo "(当前仓库：".$storename.")"?><br>
+<input type="button" value="关闭" onclick="parent.hidePicList();"></span>
+</div>
+
+
+<table style="TABLE-LAYOUT: fixed" >
+<?php
+if($orderby=='xiaoliang')
+{
+	$beginmonth=date("Y-m-d",mktime(0,0,1,date("m")-3,date("d"),date("Y")));
+	$sql="select a.*,d.allnum from product a left join (select prodid,sum(num) as allnum from sellplanmain_detail b inner join sellplanmain c on b.mainrowid=c.billid where c.user_flag>0 and c.createtime>'$beginmonth' group by prodid) d on a.productid=d.prodid where 1=1";
+}
+if($orderby=='price')
+	$sql="select * from product where 1=1";
+if($orderby=='rectime')
+{
+	$beginmonth=date("Y-m-d",mktime(0,0,1,date("m")-6,date("d"),date("Y")));
+	$sql="select a.*,d.rectime from product a left join (select prodid,max(indate) as rectime from stockinmain_detail b inner join stockinmain c on b.mainrowid=c.billid where b.opertype=1 and c.indate>'$beginmonth' group by prodid) d on a.productid=d.prodid where 1=1";
+}
+if($orderby=='kucun')
+{
+	$sql="select a.*,d.kucun from product a left join (select prodid,sum(num) as kucun from store ";
+	if($storeid!='')
+		$sql.=" where storeid=$storeid";
+	$sql.=" group by prodid) d on a.productid=d.prodid where 1=1";
+}	
+$sumsql="select count(*) as allnum from product where 1=1";
+$wheresql='';
+//是否只显示有图
+if($showhaspic=='1')
+	$wheresql.=" and fileaddress!=''";
+if($showhaskucun=='1')
+{
+	$wheresql.=" and productid in (select distinct prodid from store where num>0";
+	if($storeid!='')
+		$wheresql.=" and storeid=$storeid";
+	$wheresql.=")";
+}
+
+//产品类别
+if($prodtype>0)
+{
+	$subprodlist=getSubprodtypeByParent($prodtype);
+	if($subprodlist!='')
+		$subprodlist.=",'$prodtype'";
+	else 
+		$subprodlist=$prodtype;
+	$wheresql.=" and producttype in (".$subprodlist.")";
+}
+$sql.=$wheresql;
+if($orderby=='xiaoliang')
+	$sql.=" order by allnum desc";
+if($orderby=='price')
+	$sql.=" order by sellprice desc";
+if($orderby=='rectime')
+	$sql.=" order by rectime desc";
+if($orderby=='kucun')
+	$sql.=" order by kucun desc";
+	
+$sumsql.=$wheresql;
+$rs=$db->Execute($sumsql);
+$rs_b=$rs->GetArray();
+$allnum=$rs_b[0]['allnum'];
+$pagecount=ceil($allnum/$pagesize);
+$sql.=" limit ".($curpage-1)*$pagesize.",$pagesize";
+$rs=$db->Execute($sql);
+$rs_a=$rs->GetArray();
+for($i=0;$i<sizeof($rs_a);$i++)
+{
+	if($rs_a[$i]['fileaddress']=='')
+		$rs_a[$i]['fileaddress']='../../../Framework/images/no_picture.gif';
+	if($i%4==0) echo "<TR>";
+	echo "<td width='25%' style='padding:5px;'><img src='".$rs_a[$i]['fileaddress']."' width=100%  class='magnify'  data-magnifyto='800' onmouseover=\"this.style.cursor='pointer';this.style.cursor='hand'\" onmouseout=\"this.style.cursor='default'\">
+	<div class='product'><a href=\"javascript:addproduct('".$rs_a[$i]['productid']."');\"><img src='../../../Framework/images/shop.gif' border=0>".$rs_a[$i]['productname']."</a>";
+	echo "<span class='price'>零售价：".number_format($rs_a[$i]['sellprice'],2);
+	if($orderby=='xiaoliang')
+		echo "<br>销量：".intval($rs_a[$i]['allnum']);
+	if($orderby=='rectime' && $rs_a[$i]['rectime']!='')
+		echo "<br>最近到货：".substr($rs_a[$i]['rectime'],0,10);
+	if($orderby=='kucun')
+		echo "<br>库存：".intval($rs_a[$i]['kucun']);
+	echo "</span></div></td>";
+	if($i%4==3) 
+		echo "</TR>";
+	else if($i==sizeof($rs_a)-1)
+	{
+		for($j=0;$j<3-$i%4;$j++)
+			echo "<td width='25%' style='padding:5px;'>&nbsp;</td>";
+		echo "</tr>";
+	}
+}
+if(sizeof($rs_a)==0)
+	echo "<tr><td align=center><div class='product'><font color=red>没有找到相应的商品</font></div></td></tr>"
+?>
+</table>
+
+<?php 
+if($pagecount>1)
+{	
+		$FormPageAction=FormPageAction("curpage","");
+		$adjacents = 3;
+		echo  "<div class=\"pagination\">";
+		//previous button
+		if ($curpage > 1) 
+			echo "<a href=\"?".$FormPageAction."&curpage=".($curpage-1)."\">上一页</a>";
+		else
+			echo "<span class=\"disabled\">上一页</span>";	
+		
+		//pages	
+		if ($pagecount < 7 + ($adjacents * 2))	//not enough pages to bother breaking it up
+		{	
+			for ($counter = 1; $counter <= $pagecount; $counter++)
+			{
+				if ($counter == $curpage)
+					echo "<span class=\"current\">$counter</span>";
+				else
+					echo "<a href=\"?".$FormPageAction."&curpage=$counter\">$counter</a>";					
+			}
+		}
+		else
+		{
+			//close to beginning; only hide later pages
+			if($curpage < 1 + ($adjacents * 2))		
+			{
+				for ($counter = 1; $counter < 4 + ($adjacents * 2); $counter++)
+				{
+					if ($counter == $curpage)
+						echo  "<span class=\"current\">$counter</span>";
+					else
+						echo "<a href=\"?".$FormPageAction."&curpage=$counter\">$counter</a>";					
+				}
+				echo "...";
+				echo "<a href=\"?".$FormPageAction."&curpage=".($pagecount-1)."\">".($pagecount-1)."</a>";
+				echo "<a href=\"?".$FormPageAction."&curpage=$pagecount\">$pagecount</a>";		
+			}
+			//in middle; hide some front and some back
+			elseif($pagecount - ($adjacents * 2) >= $curpage && $curpage > ($adjacents * 2))
+			{
+				echo "<a href=\"?".$FormPageAction."&curpage=1\">1</a>";
+				echo "<a href=\"?".$FormPageAction."&curpage=2\">2</a>";
+				echo "...";
+				for ($counter = $curpage - $adjacents; $counter <= $curpage + $adjacents; $counter++)
+				{
+					if ($counter == $curpage)
+						echo  "<span class=\"current\">$counter</span>";
+					else
+						echo  "<a href=\"?".$FormPageAction."&curpage=$counter\">$counter</a>";					
+				}
+				echo "...";
+				echo "<a href=\"?".$FormPageAction."&curpage=".($pagecount-1)."\">".($pagecount-1)."</a>";
+				echo "<a href=\"?".$FormPageAction."&curpage=$pagecount\">$pagecount</a>";		
+			}
+			//close to end; only hide early pages
+			else
+			{
+				echo "<a href=\"?".$FormPageAction."&curpage=1\">1</a>";
+				echo "<a href=\"?".$FormPageAction."&curpage=2\">2</a>";
+				echo "...";
+				for ($counter = $pagecount - (2 + ($adjacents * 2)); $counter <= $pagecount; $counter++)
+				{
+					if ($counter == $curpage)
+						echo "<span class=\"current\">$counter</span>";
+					else
+						echo "<a href=\"?".$FormPageAction."&curpage=$counter\">$counter</a>";					
+				}
+			}
+		}
+		
+		//next button
+		if ($curpage < $pagecount) 
+			echo "<a href=\"?".$FormPageAction."&curpage=".($curpage+1)."\">下一页</a>";
+		else
+			echo "<span class=\"disabled\"下一页</span>";
+		echo "</div>\n";
+}
+?>
+</body>
+</html>

@@ -1,0 +1,49 @@
+*{margin:0px;padding:0px;}
+
+A.A1:link { COLOR: #003366; TEXT-DECORATION: underline;}
+A.A1:visited { COLOR: #003366; TEXT-DECORATION: underline}
+A.A1:active  { COLOR: #3333ff; TEXT-DECORATION: underline}
+A.A1:hover   { COLOR: #ff0000; TEXT-DECORATION: underline}
+
+img{border:0px;}
+body{background: #F5FAFE;}
+#navPanel{
+	width: 100%;
+	height: 30px;
+	padding-top:2px;
+	font-size:10pt;
+	background: #F5FAFE url('table-bg.jpg') top left repeat-x;
+}
+#navMenu{
+	float: left;
+	white-space: nowrap;
+	padding: 0px 20px;
+	height: 28px;
+	overflow:hidden;
+}
+#navMenu a
+{
+	float: left;
+	overflow:hidden;
+	color:#003366;
+	text-decoration: none;
+	height: 30px;
+}
+#navMenu a span{
+   float:left;
+   cursor:pointer;
+	padding: 5px 10px 4px 10px;
+	background: url('tab_inactive.gif') no-repeat center right;
+}
+#navMenu a.active, #navMenu a:hover
+{
+	font-weight:bold;
+}
+#navMenu a.active span, #navMenu a:hover span
+{
+	padding: 5px 7px 4px 7px;
+	border:1px #b8d1e2 solid;
+	border-bottom:1px #F5FAFE solid;
+	background: #F5FAFE;
+	height: 28px;
+}

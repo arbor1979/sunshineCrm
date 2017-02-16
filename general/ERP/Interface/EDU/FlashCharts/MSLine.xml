@@ -1,0 +1,85 @@
+<chart caption='Daily Visits' subcaption='(from 8/6/2006 to 8/12/2006)' lineThickness='1' showValues='0' formatNumberScale='0' anchorRadius='2'   divLineAlpha='20' divLineColor='CC3300' divLineIsDashed='1' showAlternateHGridColor='1' alternateHGridAlpha='5' alternateHGridColor='CC3300' shadowAlpha='40' labelStep="2" numvdivlines='5' chartRightMargin="35" bgColor='FFFFFF,CC3300' bgAngle='270' bgAlpha='10,10'>
+<categories >
+<category label='2007-2008学年上学期考试' />
+<category label='2007-2008学年下学期考试' />
+</categories>
+<dataset seriesName='地理' color='1D8BD1' anchorBorderColor='1D8BD1' anchorBgColor='1D8BD1'>
+<set value='78' />
+<set value='0' />
+</dataset>
+<dataset seriesName='钢琴' color='F1683C' anchorBorderColor='F1683C' anchorBgColor='1D8BD1'>
+<set value='82' />
+<set value='0' />
+</dataset>
+<dataset seriesName='教育' color='2AD62A' anchorBorderColor='2AD62A' anchorBgColor='1D8BD1'>
+<set value='77' />
+<set value='75' />
+</dataset>
+<dataset seriesName='美术' color='DBDC25' anchorBorderColor='DBDC25' anchorBgColor='1D8BD1'>
+<set value='90' />
+<set value='92' />
+</dataset>
+<dataset seriesName='声乐' color='A66EDD' anchorBorderColor='A66EDD' anchorBgColor='1D8BD1'>
+<set value='77' />
+<set value='81' />
+</dataset>
+<dataset seriesName='手风琴' color='F6BD0F' anchorBorderColor='F6BD0F' anchorBgColor='1D8BD1'>
+<set value='80' />
+<set value='0' />
+</dataset>
+<dataset seriesName='数学' color='808080' anchorBorderColor='808080' anchorBgColor='1D8BD1'>
+<set value='78' />
+<set value='0' />
+</dataset>
+<dataset seriesName='体育' color='800080' anchorBorderColor='800080' anchorBgColor='1D8BD1'>
+<set value='81' />
+<set value='81' />
+</dataset>
+<dataset seriesName='微机' color='FF8040' anchorBorderColor='FF8040' anchorBgColor='1D8BD1'>
+<set value='86' />
+<set value='0' />
+</dataset>
+<dataset seriesName='舞蹈' color='FFFF00' anchorBorderColor='FFFF00' anchorBgColor='1D8BD1'>
+<set value='84' />
+<set value='85' />
+</dataset>
+<dataset seriesName='心理' color='FF0080' anchorBorderColor='FF0080' anchorBgColor='1D8BD1'>
+<set value='76' />
+<set value='0' />
+</dataset>
+<dataset seriesName='英语' color='AFD8F8' anchorBorderColor='AFD8F8' anchorBgColor='1D8BD1'>
+<set value='76' />
+<set value='79' />
+</dataset>
+<dataset seriesName='语文' color='8BBA00' anchorBorderColor='8BBA00' anchorBgColor='1D8BD1'>
+<set value='77' />
+<set value='83' />
+</dataset>
+<dataset seriesName='儿文' color='F984A1' anchorBorderColor='F984A1' anchorBgColor='1D8BD1'>
+<set value='0' />
+<set value='77' />
+</dataset>
+<dataset seriesName='键盘' color='' anchorBorderColor='' anchorBgColor='1D8BD1'>
+<set value='0' />
+<set value='82' />
+</dataset>
+<dataset seriesName='写作' color='' anchorBorderColor='' anchorBgColor='1D8BD1'>
+<set value='0' />
+<set value='84' />
+</dataset>
+<dataset seriesName='欣赏' color='' anchorBorderColor='' anchorBgColor='1D8BD1'>
+<set value='0' />
+<set value='88' />
+</dataset>
+<styles>                 
+        <definition> 
+                          
+            <style name='CaptionFont' type='font' size='12'/> 
+        </definition> 
+        <application> 
+            <apply toObject='CAPTION' styles='CaptionFont' /> 
+            <apply toObject='SUBCAPTION' styles='CaptionFont' /> 
+        </application> 
+    </styles> 
+
+</chart> 

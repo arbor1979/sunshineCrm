@@ -1,0 +1,11 @@
+index.html
+install/*
+general/ERP/attachment/*
+general/ERP/databackup/*
+general/ERP/cache/*
+general/ERP/Framework/attachment/*
+general/ERP/Interface/Framework/FileCache/*
+general/ERP/Interface/JXC/FileCache/*
+general/ERP/Interface/CRM/FileCache/*
+attach/attachment/*
+attach/ERP/attachment/*

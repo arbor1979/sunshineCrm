@@ -1,0 +1,35 @@
+*{margin:0px;padding:0px;}
+body {background: #F5FAFE url('shortcut_bg.png') repeat-x; margin: 0px; padding: 0px;margin-top:1px;}
+img {border: none; vertical-align: middle;}
+
+img{border:0px;}
+#navPanel{
+	width: 90%;
+	height: 30px;
+	padding-top:3px;
+	font-size:10pt;
+}
+#navMenu{
+	float: left;
+	white-space: nowrap;
+	padding: 0px 20px;
+}
+#navMenu a:link,
+#navMenu a:active,
+#navMenu a:visited
+{
+	float: left;
+	display: block;
+	overflow:hidden;
+	color:#003366;
+	padding: 5px 10px 3px 10px;
+	text-decoration: none;
+}
+#navMenu a:link.active, #navMenu a:visited.active, #navMenu a:hover
+{
+	padding: 4px 9px 3px 9px;
+	border:1px #A7B8C2 solid;
+	border-bottom:0px;
+	background: #F5FAFE;
+	font-weight:bold;
+}

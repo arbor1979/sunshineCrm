@@ -1,0 +1,1 @@
+<?php $SYSTEM_MODE_DIR = "JXC" ; ?>

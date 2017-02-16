@@ -1,0 +1,271 @@
+<?php 
+	function newai_selectfields($fields)		{
+	global $common_html,$html_etc;
+	global $return_sql_line,$db;
+	global $columns,$db;
+	//print_R($columns);
+	global $showlistfieldlist,$showlistfieldfilter,$group_filter;
+	
+	$tablename=$fields['table']['name'];
+	$SQL=$fields['sql']['SQL'];
+	$init=explode('_',$_GET['action']);
+	$mark=$init[1];
+
+	global $tablewidth;
+	$tablewidth=$tablewidth!=""?$tablewidth:450;
+
+	print "<script>
+	function confirmSubmit()
+	{
+		if(form1.selfield.value==0)
+		{
+			alert('请先选择要修改的字段');
+			return false;
+		}
+		if(form1.newvalue.value=='')
+		{
+			alert('新的值不能为空');
+			form1.newvalue.focus();
+			return false;
+		}
+		if(confirm('是否确认保存？'))
+		{
+			form1.action.value='batchedit_default_data';
+			form1.submit();
+		}
+	}
+		</script>";
+	form_begin("form1","","get");
+	print "<input type='hidden' value='".$_GET['action']."' name='action'>";
+	table_begin($tablewidth);
+	$where='where 1=1 ';
+	foreach ($columns as $key=>$val)
+	{
+		if($_GET[$val]!='')
+		{
+			print "\n<input type='hidden' name='$val' value='".$_GET[$val]."'>\n";
+			if($val=='producttype')
+			{
+				$subtype=getSubprodtypeByParent($_GET[$val]);
+				if($subtype=='')
+					$subtype=$_GET[$val];
+				else 
+					$subtype.=",'".$_GET[$val]."'";
+				$where.=" and $val in (".$subtype.")";
+			}
+			else
+				$where.=" and $val='".$_GET[$val]."'";
+		}
+	}
+	if($_GET['searchfield']!='')
+	{
+		
+		
+		print "\n<input type='hidden' name='searchfield' value='".$_GET['searchfield']."'>\n";
+		print "\n<input type='hidden' name='searchvalue' value='".($_GET['searchvalue'])."'>\n";
+
+		$where=getSqlWhere($where);
+		//$where.=" and ".$_GET['searchfield']." like '%".urldecode($_GET['searchvalue'])."%'";
+	}
+	$sql="select count(*) as allcount from $tablename ".$where;
+	$rs=$db->Execute($sql);
+	//print $sql;
+	$rs_a=$rs->getArray();
+	$num=$rs_a[0]['allcount'];
+	print_title($common_html['common_html']['batchedit'],3);
+	print "<TR class=TableData>\n";
+	print "<TD noWrap colspan=2><font color=red>注意：上个页面的查询结果，合计 <b>".$num."</b> 条记录将会被批量修改</font></TD></tr>\n";
+	print "<TR class=TableData>\n";
+	print "<TD noWrap align=left width=150>选择要修改的字段:</TD>\n";
+	print "<TD ><select name='selfield' onchange='form1.submit();'><option value='0'>[请选择一项]</option>\n";
+	for($i=0;$i<sizeof($fields['name']);$i++)		{
+		$checked='';
+		if($fields['name'][$i]==$_GET['selfield'])
+			$checked='selected';
+		else 
+			$checked='';
+		print "<option value='".$fields['name'][$i]."' $checked>".$html_etc[$tablename][$fields['name'][$i]]."</option>\n";
+		
+	}
+	
+	print "</TR>\n";
+	if($_GET['selfield']!='')
+	{
+		$fieldname=$_GET['selfield'];
+		$i=array_search($_GET['selfield'],$fields['name']);
+		$filter=$fields['filter'][$i];
+		
+		$inputsize = $fields['inputsize'][$fieldname];
+		$notnull=trim($fields['null'][$i]['inputtype']);
+		$notnull=='notnull'?$notnulltext=$common_html['common_html']['mustinput']:$notnulltext='';
+		
+		if($filter=='radio')
+			print_radio($html_etc[$tablename][$fieldname].":","newvalue",trim($fields['value'][$fieldname]),$fields['select'][$i]['tablename'],$fields['select'][$i]['value'],$fields['select'][$i]['field'],2,$fields['select'][$i]['initvalue']);
+		else if($filter=='select')
+			print_select(
+						$html_etc[$tablename][$fieldname].":",
+						"newvalue",
+						trim($fields['value'][$fieldname]),
+						$fields['select'][$i]['tablename'],
+						$fields['select'][$i]['value'],
+						$fields['select'][$i]['field'],
+						$fields['other']['inputcols'],
+						$fields['select'][$i]['setfieldname'],
+						$fields['select'][$i]['setfieldvalue'],
+						$fields['select'][$i]['setfieldboolean'],
+						$fields['select'][$i]['initvalue']
+					);
+		else if($filter=="jumpproducttype")
+		{
+			$showfoldorsub=$fields['inputsize'][$fieldname];
+			print "<TR>";
+					print "<TD class=TableData noWrap>".$html_etc[$tablename][$fieldname].":</TD>\n";
+					print "<TD class=TableData noWrap >\n";
+					print "<input type=\"hidden\" name=\"newvalue\" value=\"\">\n";
+					print "<input type=\"text\" name=\"newvalue_ID\" value=\"\" readonly class=\"SmallStatic\" size=\"25\">\n";
+					print "<a href=\"javascript:;\" class=\"orgAdd\" onClick=\"SelectAllInforSingle('../../Enginee/Module/prodtype_select_single/index.php','$fieldValue','newvalue', 'newvalue_ID','$showfoldorsub')\">选择</a>\n";
+					
+					print "<a href=\"#\" class=\"orgClear\" onClick=\"ClearUser('newvalue_ID', 'newvalue')\" title=\"清空\">清空</a>";
+					print "&nbsp;".$notnulltext."</TD></TR>\n";
+					print "</TD></TR>\n";
+		}
+		else if($filter=="jumpsupply")
+		{
+			print "<TR>";
+					print "<TD class=TableData noWrap>".$html_etc[$tablename][$fieldname]."</TD>\n";
+					print "<TD class=TableData noWrap >\n";
+					print "<input type=\"hidden\" name=\"newvalue\" value=\"\">\n";
+					print "<input type=\"text\" name=\"newvalue_ID\" value=\"\" readonly class=\"SmallStatic\" size=\"30\">\n";
+					print "<input type=\"button\" title='' value=\"选择\" class=\"SmallButton\"  onClick=\"SelectAllInforSingle('../../Enginee/Module/supply_select_single/index.php','','newvalue_ID', 'newvalue')\">\n";
+					print "&nbsp;".$notnulltext."</TD></TR>\n";
+		}
+		else if($filter=="userdefine")
+		{
+			$functionName = trim($fields['userdefine'][$i]);
+
+					$fileName = $functionName.".php";
+					$fileName0 = "userdefine/$fileName";
+				
+
+					if(file_exists($fileName0))		{
+						require_once($fileName0);
+						$functionName = $functionName."_add";
+						if(function_exists($functionName))	{
+							$filtervalue = $functionName($fields,$i);
+							print $filtervalue;
+						}
+					}
+		}
+		else 
+		{
+			
+			print_tr($html_etc[$tablename][$fieldname].":","newvalue",trim($fields['value'][$fieldname]),$inputsize,$fields['other']['inputcols'],$fields['other']['class'],$notnulltext,'text','',$i+1,$filter);
+		}
+		
+	}
+	$returnmodelURL=FormPageAction2("action","init_default");
+	print "<tr align=\"center\" class=\"TableControl\">\n<td colspan=\"3\" nowrap>\n<div align=\"center\">
+	<input type=\"submit\" value=\" ".$common_html['common_html']['save']." \" accesskey='x' title=\"".$common_html['common_html']['accesskey'].":ALT+X\" class=\"SmallButton\" onClick=\"confirmSubmit();\">
+	<input type=\"button\" accesskey='c' title=\"".$common_html['common_html']['accesskey'].":ALT+C\" value=\"".$common_html['common_html']['cancel']."\"  class=\"SmallButton\" onClick=\"location='?".$returnmodelURL."'\"></div>\n</td></tr>\n";
+	table_end();
+	form_end();
+	print "<BR>";
+}
+function getSqlWhere($where)
+{
+	global $showlistfieldfilter,$fields;
+		$type=explode(',',$showlistfieldfilter);
+		$key=array_search(trim($_GET['searchfield']), $fields['name']);
+		$filter_array=explode(":", $type[$key]);
+		if($filter_array[0]=='tablefiltercolor' || $filter_array[0]=='tablefilter')
+		{
+			global $db;
+			$foreigncolumns=returntablecolumn($filter_array[1]);
+			$insql="select ".$foreigncolumns[$filter_array[2]]." from ".$filter_array[1]." where ".$foreigncolumns[$filter_array[3]]." like '%".trim($_GET['searchvalue'])."%'";
+			
+			$where.=" and ".trim($_GET['searchfield'])." in (".$insql.")";
+		}
+		else if($filter_array[0]=='number' || $filter_array[0]=='money')
+		{
+			$where.=" and ".trim($_GET['searchfield'])."=".$_GET['searchvalue'];
+			
+		}
+		else if($filter_array[0]=='city')
+		{
+			global $db;
+			$sql="select ROWID from customerarea where name like '%".$_GET['searchvalue']."%'";
+			$rs=$db->Execute($sql);
+			$rs_a=$rs->GetArray();
+			$insqlArray=array();
+			foreach ($rs_a as $row)
+			{
+				$areacode=$row['ROWID'];
+				if(substr($areacode,2,4)=='0000')
+					$insqlArray[]="left(".$_GET['searchfield'].",2)='".substr($areacode,0,2)."'";
+				else if((substr($areacode,4,2)=='00'))
+					$insqlArray[]="left(".$_GET['searchfield'].",4)='".substr($areacode,0,4)."'";
+				else 
+					$insqlArray[]=$_GET['searchfield']."='".$areacode."'";	
+			}
+			$insql=implode(" or ",$insqlArray);
+			if($insql!='')
+			{
+				$insql="(".$insql.")";
+				$where.=" and ".$insql;
+			}
+		}
+		else
+			$where.=" and ".trim($_GET['searchfield'])." like '%".$_GET['searchvalue']."%'";
+
+		return $where;
+}
+function newai_saveBatchedit($fields)		
+{
+	global $common_html,$html_etc;
+	global $return_sql_line,$db;
+	global $columns,$db;
+	//print_R($fields);
+	global $showlistfieldlist,$group_filter;
+	$tablename=$fields['table']['name'];
+	if($_GET['selfield']=='')
+	{
+		print "<script language=javascript>alert('请先选择要修改的字段');window.history.back(-1);</script>";
+		exit;
+	}
+	$where=' where 1=1 ';
+	foreach ($columns as $key=>$val)
+	{
+		if($_GET[$val]!='')
+		{
+			
+			if($val=='producttype')
+			{
+				$subtype=getSubprodtypeByParent($_GET[$val]);
+				if($subtype=='')
+					$subtype=$_GET[$val];
+				else 
+					$subtype.=",'".$_GET[$val]."'";
+				$where.=" and $val in (".$subtype.")";
+			}
+			else
+				$where.=" and $val='".$_GET[$val]."'";
+		}
+	}
+	
+	if($_GET['searchfield']!='')
+		$where=getSqlWhere($where);
+//$where.=" and ".$_GET['searchfield']." like '%".urldecode($_GET['searchvalue'])."%'";
+	if($_GET['selfield']!='')
+	{
+		$fieldname=$_GET['selfield'];
+		$i=array_search($_GET['selfield'],$fields['name']);
+		$filter=$fields['filter'][$i];
+		if($filter=="userdefine")
+			$sql="update $tablename set $fieldname=".$_GET['newvalue'].$where;
+		else 
+			$sql="update $tablename set $fieldname='".$_GET['newvalue']."'".$where;
+
+		$db->Execute($sql);
+	}
+}
+?>

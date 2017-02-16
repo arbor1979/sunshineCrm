@@ -1,0 +1,33 @@
+* {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-TOP: 0px
+}
+IMG {
+	BORDER-TOP-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-RIGHT-WIDTH: 0px
+}
+BODY {
+	BACKGROUND: url(menu_top_bg.png) #ffffff repeat-x left top
+}
+#navPanel {
+	FONT-SIZE: 10pt; WIDTH: 100%; PADDING-TOP: 2px; HEIGHT: 30px
+}
+#navMenu {
+	PADDING-RIGHT: 20px; PADDING-LEFT: 20px; FLOAT: left; PADDING-BOTTOM: 0px; PADDING-TOP: 0px; WHITE-SPACE: nowrap
+}
+#navMenu A {
+	PADDING-LEFT: 5px; FLOAT: left; OVERFLOW: hidden; COLOR: #003366; TEXT-DECORATION: none
+}
+#navMenu A SPAN {
+	PADDING-RIGHT: 10px; PADDING-LEFT: 5px; BACKGROUND: url(tab_inactive.gif) no-repeat right center; FLOAT: left; PADDING-BOTTOM: 5px; CURSOR: pointer; PADDING-TOP: 7px
+}
+#navMenu A.active {
+	FONT-WEIGHT: bold; BACKGROUND: url(menu_top_hover_l.png) no-repeat left top
+}
+#navMenu A:hover {
+	FONT-WEIGHT: bold; BACKGROUND: url(menu_top_hover_l.png) no-repeat left top
+}
+#navMenu A.active SPAN {
+	PADDING-RIGHT: 10px; PADDING-LEFT: 5px; BACKGROUND: url(menu_top_hover_r.png) no-repeat right top; PADDING-BOTTOM: 5px; PADDING-TOP: 7px
+}
+#navMenu A:hover SPAN {
+	PADDING-RIGHT: 10px; PADDING-LEFT: 5px; BACKGROUND: url(menu_top_hover_r.png) no-repeat right top; PADDING-BOTTOM: 5px; PADDING-TOP: 7px
+}

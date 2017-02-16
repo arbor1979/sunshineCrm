@@ -1,0 +1,1 @@
+<META HTTP-EQUIV=REFRESH CONTENT='0;URL=http://edu.tongda2000.com/book/'>

@@ -1,0 +1,1 @@
+紧急通知请在TDLIB\Interface\CRM\crm_mytable\notify.txt中进行填写！
